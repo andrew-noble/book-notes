@@ -7,22 +7,61 @@
     <% for(let item of bookList){%>
         <div class="book-entry">
 
+            <!--This is the book details display - visible by default-->
+            <div id="display-bank<%=item.id%>">
+                <h2 class="detail title<%=item.id%>">
+                    <%= item.title %>
+                </h2>
+                <h3 class="detail author">
+                    <%= item.title %>
+                </h3>
+                <h4 class="detail isbn">
+                    <%= item.isbn %>
+                </h4>
+                <p class="detail notes">
+                    <%= item.notes %>
+                </p>
+                <p class="detail genre">
+                    <%= item.genre %>
+                </p>
+                <p class="detail date">
+                    <%= item.date %>
+                </p>
+                <p class="detail rating">
+                    Rating/3: <%= item.rating %>
+                </p>
+                <button id="edit<%=item.id%>" class="edit" onclick="editHandler('<%=item.id%>')"><img class="icon"
+                        src="" alt="pencil image"></button>
+            </div>
 
-            <!--This p and button are displayed default-->
-            <p id="title<%=item.id%>">
-                <%= item.title %>
-            </p>
-            <button id="edit<%=item.id%>" class="edit" onclick="handler('<%=item.id%>')"><img class="icon"
-                    src="/assets/icons/pencil-solid.svg" alt="pencil image"></button>
 
 
-            <!--On click of edit button, this form takes place of above p and button via handler()-->
-            <form class="edit" action="/edit" method="post">
+            <!--On click of edit button, this editable form takes the place of the book details via editHandler()-->
+            <form id="edit-bank<%=item.id%>" action="/edit" method="post" hidden="true">
                 <input type="hidden" name="updatedItemId" value="<%= item.id %>">
-                <input id="input<%=item.id%>" type="text" name="updatedItemTitle" value="<%= item.title %>"
-                    autocomplete="off" autofocus="true" hidden="true" />
-                <button id="done<%=item.id%>" class="edit" type="submit" hidden><img class="icon"
-                        src="/assets/icons/check-solid.svg" alt="tick image"></button>
+                <input class="input<%=item.id%> title" type="text" name="updatedItemTitle" value="<%= item.title %>"
+                    autocomplete="off" autofocus="true" />
+
+                <input class="input<%=item.id%> author" type="text" name="updatedItemAuthor" value="<%= item.author %>"
+                    autocomplete="off" autofocus="false" />
+
+                <input class="input<%=item.id%> isbn" type="text" name="updatedItemIsbn" value="<%= item.isbn %>"
+                    autocomplete="off" autofocus="false" />
+
+                <input class="input<%=item.id%> notes" type="text" name="updatedItemNotes" value="<%= item.notes %>"
+                    autocomplete="off" autofocus="false" />
+
+                <input class="input<%=item.id%> genre" type="text" name="updatedItemGenre" value="<%= item.genre %>"
+                    autocomplete="off" autofocus="false" />
+
+                <input class="input<%=item.id%> date" type="text" name="updatedItemDate" value="<%= item.date %>"
+                    autocomplete="off" autofocus="false" />
+
+                <input class="input<%=item.id%> rating" type="text" name="updatedItemRating" value="<%= item.rating %>"
+                    autocomplete="off" autofocus="false" />
+
+                <button id="done<%=item.id%>" class="edit" type="submit" hidden><img class="icon" src=""
+                        alt="tick image"></button>
             </form>
 
 
@@ -35,11 +74,9 @@
 
         <% } %>
             <script>
-                function handler(id) {
-                    document.getElementById("title" + id).setAttribute("hidden", true)
-                    document.getElementById("edit" + id).setAttribute("hidden", true)
-                    document.getElementById("done" + id).removeAttribute("hidden")
-                    document.getElementById("input" + id).removeAttribute("hidden")
+                function editHandler(id) {
+                    document.getElementById("display-bank" + id).setAttribute("hidden", true)
+                    document.getElementById("edit-bank" + id).removeAttribute("hidden")
                 }
             </script>
             <%- include('partials/footer.ejs'); -%>

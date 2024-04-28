@@ -39,8 +39,15 @@ app.get("/sort", async (req, res) => {});
 
 app.get("/search", async (req, res) => {});
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// db.end() somewhere??
+//Added this, should probably carry to future projects.
+process.on("SIGINT", () => {
+  //process is the lowest level node.js entity here
+  console.log("Ctrl-C detected, ending server");
+  db.end();
+  //this is a higher level http.server object created by the even higher level express object express.app
+  server.close();
+});
