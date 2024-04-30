@@ -13,7 +13,7 @@
                     <%= item.title %>
                 </h2>
                 <h3 class="detail author">
-                    <%= item.title %>
+                    <%= item.author %>
                 </h3>
                 <h4 class="detail isbn">
                     <%= item.isbn %>
@@ -31,52 +31,85 @@
                     Rating/3: <%= item.rating %>
                 </p>
                 <button id="edit<%=item.id%>" class="edit" onclick="editHandler('<%=item.id%>')"><img class="icon"
-                        src="" alt="pencil image"></button>
+                        src="" alt="edit"></button>
             </div>
-
-
 
             <!--On click of edit button, this editable form takes the place of the book details via editHandler()-->
             <form id="edit-bank<%=item.id%>" action="/edit" method="post" hidden="true">
                 <input type="hidden" name="updatedItemId" value="<%= item.id %>">
-                <input class="input<%=item.id%> title" type="text" name="updatedItemTitle" value="<%= item.title %>"
+                <input class="input<%=item.id%> title" type="text" name="updatedTitle" value="<%= item.title %>"
                     autocomplete="off" autofocus="true" />
 
-                <input class="input<%=item.id%> author" type="text" name="updatedItemAuthor" value="<%= item.author %>"
+                <input class="input<%=item.id%> author" type="text" name="updatedAuthor" value="<%= item.author %>"
                     autocomplete="off" autofocus="false" />
 
-                <input class="input<%=item.id%> isbn" type="text" name="updatedItemIsbn" value="<%= item.isbn %>"
+                <input class="input<%=item.id%> isbn" type="text" name="updatedIsbn" value="<%= item.isbn %>"
                     autocomplete="off" autofocus="false" />
 
-                <input class="input<%=item.id%> notes" type="text" name="updatedItemNotes" value="<%= item.notes %>"
+                <input class="input<%=item.id%> notes" type="text" name="updatedNotes" value="<%= item.notes %>"
                     autocomplete="off" autofocus="false" />
 
-                <input class="input<%=item.id%> genre" type="text" name="updatedItemGenre" value="<%= item.genre %>"
+                <input class="input<%=item.id%> genre" type="text" name="updatedGenre" value="<%= item.genre %>"
                     autocomplete="off" autofocus="false" />
 
-                <input class="input<%=item.id%> date" type="text" name="updatedItemDate" value="<%= item.date %>"
+                <input class="input<%=item.id%> date" type="text" name="updatedDate" value="<%= item.date %>"
                     autocomplete="off" autofocus="false" />
 
-                <input class="input<%=item.id%> rating" type="text" name="updatedItemRating" value="<%= item.rating %>"
+                <input class="input<%=item.id%> rating" type="text" name="updatedRating" value="<%= item.rating %>"
                     autocomplete="off" autofocus="false" />
 
-                <button id="done<%=item.id%>" class="edit" type="submit" hidden><img class="icon" src=""
+                <button id="done<%=item.id%>" class="edit" type="submit"><img class="icon" src=""
                         alt="tick image"></button>
             </form>
 
+            <button id="delete-button<%=item.id%>" class="delete" onclick="deleteHandler('<%=item.id%>')"><img
+                    class="icon" src="" alt="delete"></button>
 
-            <form action="/delete" method="post">
-                <input type="checkbox" onchange="this.form.submit()" name="deleteItemId" value="<%= item.id %>">
+            <form id="delete-bank<%=item.id%>" action="/delete" method="post" hidden="true">
+                <input type="checkbox" onchange="this.form.submit()" name="deleteId" value="<%= item.id %>">
+            </form>
+        </div>
+        <% } %>
+            <button id="addnew" class="edit" onclick="addHandler()"><img class="icon" src="" alt="add"></button>
+            <form id="add-bank" action="/add" method="post" hidden="true">
+                <input class="add title" type="text" name="addTitle" placeholder="Title" autocomplete="off"
+                    autofocus="true" />
+
+                <input class="add author" type="text" name="addAuthor" placeholder="Author" autocomplete="off"
+                    autofocus="false" />
+
+                <input class="add isbn" type="text" name="addIsbn" placeholder="isbn-13" autocomplete="off"
+                    autofocus="false" />
+
+                <input class="add notes" type="textarea" name="addNotes" placeholder="notes" autocomplete="off"
+                    autofocus="false" />
+
+                <input class="add genre" type="text" name="addGenre" placeholder="genre" autocomplete="off"
+                    autofocus="false" />
+
+                <input class="add date" type="text" name="addDate" placeholder="date (YYYY-MM-DD)" autocomplete="off"
+                    autofocus="false" />
+
+                <input class="add rating" type="text" name="addRating" placeholder="rating 1-3" autocomplete="off"
+                    autofocus="false" />
+
+                <button class="add" type="submit"><img class="icon" src="" alt="tick image"></button>
+
             </form>
 
 
-        </div>
-
-        <% } %>
             <script>
                 function editHandler(id) {
                     document.getElementById("display-bank" + id).setAttribute("hidden", true)
                     document.getElementById("edit-bank" + id).removeAttribute("hidden")
                 }
+                function deleteHandler(id) {
+                    document.getElementById("delete-button" + id).setAttribute("hidden", true)
+                    document.getElementById("delete-bank" + id).removeAttribute("hidden")
+                }
+                function addHandler() {
+                    document.getElementById("add-bank").removeAttribute("hidden")
+                }
+
             </script>
             <%- include('partials/footer.ejs'); -%>
