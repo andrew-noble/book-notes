@@ -1,10 +1,22 @@
 <%- include('partials/header.ejs'); -%>
 
+    <a href="/">Show All Books</a>
+    <form id="search" action="/search" method="post">
+        <input type="text" name="searchField" placeholder="Search for a book by title or author" />
+        <input id="searchBtn" class="search" type="submit"></button>
+    </form>
+
+    <!--Using query string here was a great idea. So simple-->
+    <a href="/sort?sortMode=title">Sort by title</a>
+    <a href="/sort?sortMode=recency">Sort by most recent</a>
+    <a href="/sort?sortMode=rating">Sort by highest rating</a>
+
     <% for(let item of bookList){%>
-        <div class="book-entry">
+        <div class="book-entry entryNum<%=item.id%>">
 
             <!--This is the book details display - visible by default-->
             <div id="display-bank<%=item.id%>">
+                <img src="<%=item.cover%>" />
                 <h2 class="detail title<%=item.id%>">
                     <%= item.title %>
                 </h2>

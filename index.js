@@ -21,19 +21,30 @@ db.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+//alphabetical sorting by default
+let sortMode = "title";
+
+function getCover(isbn) {
+  return `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
+}
 
 app.get("/", async (req, res) => {
-  //default sort is most recent
+  const search = req.query.search;
+  //by deafult search is null, so all books are shown
   const result = await db.query("SELECT * FROM books");
-  //sort my title alphabetical for default
-  const bookList = sortBooks(result.rows, "title");
+  //default sort is most recent
+  const bookList = sortBooks(result.rows, sortMode);
 
   //Fixing dates to make it simple -- should be able to do this in the query but it makes me have to not use *
   //which causes pg to output an string rather than object which is annoying to parse, so I'm doing this.
-  //This also appears to be important for inserting dates into the DB down in /edit and /add
+  //This also appears to be important for inserting dates back into the DB down in /edit and /add
   bookList.forEach((entry) => {
     entry.date = entry.date.toISOString().split("T")[0];
+    entry.cover = getCover(entry.isbn);
   });
+
+  console.log(bookList);
+
   res.render("index.ejs", {
     bookList: bookList,
   });
@@ -102,9 +113,25 @@ app.post("/delete", async (req, res) => {
   res.redirect("/");
 });
 
-app.get("/sort", async (req, res) => {});
+//goddamn this was a good way to do this. So simple on frontend and backend
+//remember querystrings are good for sorting/filtering bc. They lend themselves to when
+//the user is specifying a choice from pre-made options (like 'title' or 'recency')
+app.get("/sort", async (req, res) => {
+  sortMode = req.query.sortMode;
+  res.redirect("/");
+});
 
-app.get("/search", async (req, res) => {});
+app.post("/search", async (req, res) => {
+  const query = req.body.searchField.toLowerCase();
+  const result = await db.query(
+    "SELECT * FROM books WHERE LOWER(title) LIKE '%' || $1 || '%' OR LOWER(author) LIKE '%' || $1 || '%'",
+    [query]
+  );
+  const bookList = result.rows;
+  res.render("index.ejs", {
+    bookList: bookList,
+  });
+});
 
 const server = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
