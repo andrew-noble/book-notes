@@ -4,6 +4,7 @@ import queryString from "query-string";
 import bodyParser from "body-parser";
 import "dotenv/config";
 import pg from "pg";
+import sortBooks from "./helpers/sorter.js";
 
 const db_pw = process.env.DB_PASSWORD;
 
@@ -23,8 +24,10 @@ app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
   //default sort is most recent
-  const result = await db.query("SELECT * FROM books ORDER BY date DESC");
-  const bookList = result.rows;
+  const result = await db.query("SELECT * FROM books");
+  //sort my title alphabetical for default
+  const bookList = sortBooks(result.rows, "title");
+
   //Fixing dates to make it simple -- should be able to do this in the query but it makes me have to not use *
   //which causes pg to output an string rather than object which is annoying to parse, so I'm doing this.
   //This also appears to be important for inserting dates into the DB down in /edit and /add
