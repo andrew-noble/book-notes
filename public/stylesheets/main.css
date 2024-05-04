@@ -1,0 +1,10 @@
+html {
+  display: flex;
+  justify-content: center;
+}
+
+.book-entry {
+  max-width: 85%;
+}
+
+/*# sourceMappingURL=main.css.map */
