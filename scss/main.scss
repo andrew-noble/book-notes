@@ -17,26 +17,34 @@ main,
   grid-template-columns: 30% 70%;
   grid-template-rows: 10% 80% 10%;
   margin: 0.5em 0;
+  border: 1px solid black;
+  padding: 1rem;
 }
 
-#book-title {
-  grid-row: 1 2;
-  grid-column: 1 2;
+@media (max-width: 40em) {
+  .book-entry {
+    width: auto;
+  }
 }
 
-#details-bank {
-  grid-row: 2 3;
-  grid-column: 1 2;
+.title-bank {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
 }
 
-#notes-bank {
-  grid-row: 2 3;
-  grid-column: 2 3;
+.details-bank {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
 }
 
-#buttons-bank {
-  grid-row: 3 4;
-  grid-column: 0 1;
+.notes-bank {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+}
+
+.buttons-bank {
+  grid-row: 3 / 4;
+  grid-column: 0 / 1;
 }
 
 .book-cover {
@@ -65,8 +73,16 @@ h1 {
   text-align: center;
 }
 
-@media (max-width: 40em) {
-  .book-entry {
-    width: auto;
-  }
+/* basic button styling */
+.btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
 }

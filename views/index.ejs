@@ -15,10 +15,10 @@
 
     <form id="search" action="/search" method="post">
         <input type="text" name="searchField" placeholder="Search by title or author" />
-        <input id="searchBtn" class="search" type="submit"></button>
+        <input id="searchBtn" class="search btn" type="submit"></button>
     </form>
 
-    <button id="addnew" class="edit" onclick="addHandler()"><img class="icon" src="" alt="add a book"></button>
+    <button id="addnew btn" class="add btn" onclick="addHandler()"><img class="icon" src="" alt="add a book"></button>
     <form id="add-bank" action="/add" method="post" hidden="true">
         <input class="add title" type="text" name="addTitle" placeholder="Title" autocomplete="off" autofocus="true" />
 
@@ -38,7 +38,7 @@
         <input class="add rating" type="text" name="addRating" placeholder="rating 1-3" autocomplete="off"
             autofocus="false" />
 
-        <button class="add" type="submit"><img class="icon" src="" alt="tick image"></button>
+        <button class="add btn" type="submit"><img class="icon" src="" alt="tick image"></button>
 
     </form>
 
@@ -47,14 +47,14 @@
         <% for(let item of bookList){%>
             <div class="book-entry entryNum<%=item.id%>">
 
-                <div id="title-bank">
+                <div class="title-bank title<%=item.id%>">
                     <h2 class="detail title<%=item.id%>">
                         <%= item.title %>
                     </h2>
                 </div>
 
                 <!--This is the book details display - visible by default-->
-                <div id="details-bank<%=item.id%>">
+                <div class="details-bank details<%=item.id%>">
                     <img class="book-cover" src="<%=item.cover%>" />
                     <h3 class="detail author">
                         <%= item.author %>
@@ -74,19 +74,19 @@
                         </strong>/3
                     </p>
                 </div>
-                <div id="notes-bank">
+                <div class="notes-bank notes<%=item.id%>">
                     <p class="notes">
                         <%= item.notes %>
                     </p>
                 </div>
 
-                <div id="buttons-bank">
+                <div class="buttons-bank buttons<%=item.id%>">
                     <!--On click of edit button, this editable form takes the place of the book details via editHandler()-->
-                    <button id="edit<%=item.id%>" class="edit" onclick="editHandler('<%=item.id%>')"><img class="icon"
-                            src="" alt="edit"></button>
+                    <button id="edit<%=item.id%>" class="edit btn" onclick="editHandler('<%=item.id%>')"><img
+                            class="icon" src="" alt="edit"></button>
 
-                    <button id="delete-button<%=item.id%>" class="delete" onclick="deleteHandler('<%=item.id%>')"><img
-                            class="icon" src="" alt="delete"></button>
+                    <button id="delete-button<%=item.id%>" class="delete btn"
+                        onclick="deleteHandler('<%=item.id%>')"><img class="icon" src="" alt="delete"></button>
                 </div>
 
                 <div id="hidden-forms">
