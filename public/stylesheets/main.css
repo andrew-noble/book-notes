@@ -63,6 +63,10 @@ hr {
   gap: 1rem;
 }
 
+.notes {
+  font-size: 1rem;
+}
+
 #search,
 #sorters {
   margin: 0.5rem;

@@ -47,15 +47,15 @@
         <% for(let item of bookList){%>
             <div class="book-entry entryNum<%=item.id%>">
 
-                <div class="title-bank title<%=item.id%>">
+                <div id="title<%=item.id%>" class="title-bank title<%=item.id%>">
                     <h2 class="detail title<%=item.id%>">
                         <%= item.title %>
                     </h2>
                 </div>
 
                 <!--This is the book details display - visible by default-->
-                <div class="details-bank details<%=item.id%>">
-                    <img class="book-cover" src="<%=item.cover%>" />
+                <div id="details<%=item.id%>" class="details-bank">
+                    <img class="book-cover" src="<%=item.cover%>" alt="book cover image" />
                     <h3 class="detail author">
                         <%= item.author %>
                     </h3>
@@ -74,15 +74,15 @@
                         </strong>/3
                     </p>
                 </div>
-                <div class="notes-bank notes<%=item.id%>">
+                <div id="notes<%=item.id%>" class="notes-bank notes<%=item.id%>">
                     <p class="notes">
                         <%= item.notes %>
                     </p>
                 </div>
 
-                <div class="buttons-bank buttons<%=item.id%>">
+                <div id="buttons<%=item.id%>" class="buttons-bank buttons<%=item.id%>">
                     <!--On click of edit button, this editable form takes the place of the book details via editHandler()-->
-                    <button id="edit<%=item.id%>" class="edit btn" onclick="editHandler('<%=item.id%>')"><img
+                    <button id="edit-button<%=item.id%>" class="edit btn" onclick="editHandler('<%=item.id%>')"><img
                             class="icon" src="" alt="edit"></button>
 
                     <button id="delete-button<%=item.id%>" class="delete btn"
@@ -127,7 +127,10 @@
 
     <script>
         function editHandler(id) {
-            document.getElementById("display-bank" + id).setAttribute("hidden", true)
+            document.getElementById("title" + id).setAttribute("hidden", true)
+            document.getElementById("details" + id).setAttribute("hidden", true)
+            document.getElementById("notes" + id).setAttribute("hidden", true)
+            document.getElementById("buttons" + id).setAttribute("hidden", true)
             document.getElementById("edit-bank" + id).removeAttribute("hidden")
         }
         function deleteHandler(id) {
