@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/formstyling.css" />
+    <title>Edit Book Entry</title>
+</head>
+
+<body>
+    <header id="masthead">Andrew Noble</header>
+    <main>
+
+        <form id="add-bank" action="/add" method="post">
+            <input class="add title" type="text" name="addTitle" placeholder="Title" autocomplete="off"
+                autofocus="true" />
+
+            <input class="add author" type="text" name="addAuthor" placeholder="Author" autocomplete="off"
+                autofocus="false" />
+
+            <input class="add isbn" type="text" name="addIsbn" placeholder="isbn-13" autocomplete="off"
+                autofocus="false" />
+
+            <input class="add notes" type="textarea" name="addNotes" placeholder="notes" autocomplete="off"
+                autofocus="false" />
+
+            <input class="add genre" type="text" name="addGenre" placeholder="genre" autocomplete="off"
+                autofocus="false" />
+
+            <input class="add date" type="text" name="addDate" placeholder="date (YYYY-MM-DD)" autocomplete="off"
+                autofocus="false" />
+
+            <input class="add rating" type="text" name="addRating" placeholder="rating 1-3" autocomplete="off"
+                autofocus="false" />
+
+            <button class="add btn" type="submit"><img class="icon" src="" alt="tick image"></button>
+
+        </form>
+
+        <%- include('partials/footer.ejs'); -%>

@@ -86,6 +86,14 @@ h1 {
   cursor: pointer;
 }
 
+.btn.confirm {
+  background-color: red;
+}
+
+.btn.confirm:hover {
+  background-color: darkred;
+}
+
 .btn:hover {
   background-color: #0056b3;
 }

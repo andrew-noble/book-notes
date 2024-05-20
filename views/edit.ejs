@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/formstyling.css" />
+    <title>Edit Book Entry</title>
+</head>
+
+<body>
+    <header id="masthead">Andrew Noble</header>
+    <main>
+        <form id="edit-bank" action="/edit" method="post">
+            <input type="hidden" name="updatedItemId" value="<%= item.id %>">
+            <input class="input<%=item.id%> title" type="text" name="updatedTitle" value="<%= item.title %>"
+                autocomplete="off" autofocus="true" />
+
+            <input class="input<%=item.id%> author" type="text" name="updatedAuthor" value="<%= item.author %>"
+                autocomplete="off" autofocus="false" />
+
+            <input class="input<%=item.id%> isbn" type="text" name="updatedIsbn" value="<%= item.isbn %>"
+                autocomplete="off" autofocus="false" />
+
+            <input class="input<%=item.id%> notes" type="text" name="updatedNotes" value="<%= item.notes %>"
+                autocomplete="off" autofocus="false" />
+
+            <input class="input<%=item.id%> genre" type="text" name="updatedGenre" value="<%= item.genre %>"
+                autocomplete="off" autofocus="false" />
+
+            <input class="input<%=item.id%> date" type="text" name="updatedDate" value="<%= item.date %>"
+                autocomplete="off" autofocus="false" />
+
+            <input class="input<%=item.id%> rating" type="text" name="updatedRating" value="<%= item.rating %>"
+                autocomplete="off" autofocus="false" />
+
+            <button id="done<%=item.id%>" class="edit" type="submit">Done editing<img class="icon" src=""
+                    alt="tick image"></button>
+        </form>
+
+        <%- include('partials/footer.ejs'); -%>

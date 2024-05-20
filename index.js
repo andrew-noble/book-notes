@@ -113,6 +113,33 @@ app.post("/edit", async (req, res) => {
   }
 });
 
+app.post("/addPage", async (req, res) => {
+  try {
+    res.render("add.ejs");
+  } catch (error) {
+    console.log("Error adding a new book entry:" + error);
+  }
+});
+
+app.post("/editPage", async (req, res) => {
+  try {
+    const updatedEntry = {
+      title: req.body.updatedTitle,
+      author: req.body.updatedAuthor,
+      isbn: req.body.updatedIsbn,
+      notes: req.body.updatedNotes,
+      genre: req.body.updatedGenre,
+      date: req.body.updatedDate,
+      rating: req.body.updatedRating,
+      id: req.body.updatedItemId,
+    };
+
+    res.render("edit.ejs", { item: updatedEntry });
+  } catch (error) {
+    console.log("Error editing the book entry:" + error);
+  }
+});
+
 //would strictly be a DELETE
 app.post("/delete", async (req, res) => {
   try {
