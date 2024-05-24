@@ -4,7 +4,7 @@ import queryString from "query-string";
 import bodyParser from "body-parser";
 import "dotenv/config";
 import pg from "pg";
-import sortBooks from "./helpers/sorter.js";
+//import sortBooks from "./helpers/sorter.js";
 
 const db_pw = process.env.DB_PASSWORD;
 
@@ -21,7 +21,8 @@ db.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-let sortMode = "title"; //default sort is alphabetical
+let sortMode = "title"; //default sort is alphabetical by title
+const validSortModes = ["title", "date", "rating"];
 
 function getCover(isbn) {
   return `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
@@ -29,9 +30,9 @@ function getCover(isbn) {
 
 app.get("/", async (req, res) => {
   try {
-    const search = req.query.search;
-    const result = await db.query("SELECT * FROM books");
-    const bookList = sortBooks(result.rows, sortMode);
+    const text = `SELECT * FROM books ORDER BY ${sortMode} DESC`;
+    const result = await db.query(text);
+    const bookList = result.rows;
 
     //Fixing dates to make it simple -- should be able to do this in the query but it makes me have to not use *
     //which causes pg to output an string rather than object which is annoying to parse, so I'm doing this.
@@ -156,8 +157,14 @@ app.post("/delete", async (req, res) => {
 //the user is specifying a choice from pre-made options (like 'title' or 'recency')
 app.get("/sort", async (req, res) => {
   try {
-    sortMode = req.query.sortMode;
-    res.redirect("/");
+    console.log(req.query.sortMode);
+    //this prevents SQL injection I think
+    if (!validSortModes.includes(req.query.sortMode)) {
+      console.log("Invalid sort mode.");
+    } else {
+      sortMode = req.query.sortMode;
+      res.redirect("/");
+    }
   } catch (error) {
     console.log("Error sorting the books:" + error);
   }
