@@ -18,7 +18,7 @@ the first time in this project.
 - [EJS](https://ejs.co/) for templating the frontend
 - [dotenv](https://www.npmjs.com/package/dotenv) for hiding my client secret and client id
 - [sass](https://sass-lang.com/) for styling
-- [postgresql] (https://www.postgresql.org/) as the database
+- [postgresql](https://www.postgresql.org/) as the database
 
 ## Getting started
 
