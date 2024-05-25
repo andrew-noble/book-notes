@@ -7,18 +7,19 @@
         <a href="/">Show All Books</a>
         <!--Using query string here was a great idea. So simple-->
 
+        <!-- links that allow the user to sort the list of books -->
         <a href="/sort?sortMode=title">Sort by title</a>
         <a href="/sort?sortMode=date">Sort by most recent</a>
         <a href="/sort?sortMode=rating">Sort by highest rating</a>
     </div>
 
-
+    <!-- A field that allows the user to search for entries -->
     <form id="search" action="/search" method="post">
         <input type="text" name="searchField" placeholder="Search by title or author" />
         <input id="searchBtn" class="search btn" type="submit"></button>
     </form>
 
-
+    <!-- Just a button to add a book notes entry -->
     <form action="/addPage" method="post">
         <button class="add btn" type="submit">Add a Book</button>
     </form>
@@ -34,7 +35,7 @@
                     </h2>
                 </div>
 
-                <!--This is the book details display - visible by default-->
+                <!--This is details for the book, displayed-->
                 <div id="details<%=item.id%>" class="details-bank">
                     <img class="book-cover" src="<%=item.cover%>" alt="book cover image" />
                     <h3 class="detail author">
@@ -55,12 +56,16 @@
                         </strong>/3
                     </p>
                 </div>
+
+                <!-- book notes, the largest displayed item -->
                 <div id="notes<%=item.id%>" class="notes-bank notes<%=item.id%>">
                     <p class="notes">
                         <%= item.notes %>
                     </p>
                 </div>
 
+                <!-- This div is really just the edit button, but with a bunch of hidden inputs so that
+                the entry being edited can be populated on the edit page served by /editPage -->
                 <div id="buttons<%=item.id%>" class="buttons-bank buttons<%=item.id%>">
                     <form action="/editPage" method="post">
                         <input type="hidden" name="updatedItemId" value="<%= item.id %>">
@@ -89,6 +94,7 @@
             <% } %>
     </section>
 
+    <!-- This frontend script simply provides a "confirm" feature to book entry deletion-->
     <script>
         function deleteHandler(id) {
             document.getElementById("delete-button" + id).setAttribute("hidden", true)

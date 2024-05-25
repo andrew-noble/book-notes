@@ -28,6 +28,7 @@ function getCover(isbn) {
   return `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
 }
 
+//this endpoint just shows the whole list of books, sorted per sortMode
 app.get("/", async (req, res) => {
   try {
     const text = `SELECT * FROM books ORDER BY ${sortMode} DESC`;
@@ -50,6 +51,7 @@ app.get("/", async (req, res) => {
   }
 });
 
+//this endpoint adds a new entry to the database
 app.post("/add", async (req, res) => {
   try {
     const entry = {
@@ -80,6 +82,7 @@ app.post("/add", async (req, res) => {
   }
 });
 
+//this endpoint alters a book entry in the database
 //would strictly be a PATCH, html forms only support get/post tho
 app.post("/edit", async (req, res) => {
   try {
@@ -114,6 +117,7 @@ app.post("/edit", async (req, res) => {
   }
 });
 
+//this endpoint takes the user to the page that lets them add a new entry
 app.post("/addPage", async (req, res) => {
   try {
     res.render("add.ejs");
@@ -122,9 +126,10 @@ app.post("/addPage", async (req, res) => {
   }
 });
 
+//this enpoint takes the user to the edit page with the entry-to-be-edited populated
 app.post("/editPage", async (req, res) => {
   try {
-    const updatedEntry = {
+    const updateEntry = {
       title: req.body.updatedTitle,
       author: req.body.updatedAuthor,
       isbn: req.body.updatedIsbn,
@@ -135,12 +140,13 @@ app.post("/editPage", async (req, res) => {
       id: req.body.updatedItemId,
     };
 
-    res.render("edit.ejs", { item: updatedEntry });
+    res.render("edit.ejs", { item: updateEntry });
   } catch (error) {
     console.log("Error editing the book entry:" + error);
   }
 });
 
+//this endpoint deletes a book entry
 //would strictly be a DELETE
 app.post("/delete", async (req, res) => {
   try {
@@ -151,6 +157,9 @@ app.post("/delete", async (req, res) => {
     console.log("Error deleting book entry:" + error);
   }
 });
+
+//the /sort endpoint just sanitizes the user's choice for sort, changes the sortMode variable,
+//and redirects to '/' for re-displaying
 
 //goddamn this was a good way to do this. So simple on frontend and backend
 //remember querystrings are good for sorting/filtering bc. They lend themselves to when
@@ -170,6 +179,7 @@ app.get("/sort", async (req, res) => {
   }
 });
 
+//this endpoint retrieves a smaller booklist that satisfies the user's search, and renders index.ejs like / does
 app.post("/search", async (req, res) => {
   try {
     const query = req.body.searchField.toLowerCase();
@@ -190,7 +200,7 @@ const server = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-//Added this, should probably carry to future projects.
+//This is logic that handles the server closing
 process.on("SIGINT", () => {
   //process is the lowest level node.js entity here
   console.log("Ctrl-C detected, ending server");
