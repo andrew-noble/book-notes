@@ -1,6 +1,6 @@
 # Book Notes Project
 
-This is a small project I did to practice working with a full application stack: frontend templating uses EJS, backend is express.js, and database
+This is a small project I did to practice working with a full application stack: frontend uses React and tailwind, backend is express.js, and database
 is PostgreSQL. Basically, this app allows the user to record books they've read and what they think of them. I also experimented with scss for
 the first time in this project.
 
