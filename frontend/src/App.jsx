@@ -1,11 +1,17 @@
 import React from "react";
-import BookCard from "./components/public/BookCard";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PublicHome from "./routes/PublicHome";
+import AdminHome from "./routes/AdminHome";
 import "./App.css";
+
+const isPublic = import.meta.env.VITE_IS_PUBLIC;
 
 export default function App() {
   return (
-    <div className="max-w-2xl">
-      <BookCard></BookCard>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={isPublic ? <PublicHome /> : <AdminHome />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
