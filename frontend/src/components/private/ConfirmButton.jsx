@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 export default function ConfirmButton(props) {
   const [confirm, setConfirm] = useState(false);
-  const { confirmAction, confirmText, initialText } = props;
+  const { confirmAction, confirmText } = props;
 
   return (
     <div className="p-4">
@@ -11,7 +11,7 @@ export default function ConfirmButton(props) {
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={() => setConfirm(true)}
         >
-          {initialText}
+          {props.children}
         </button>
       ) : (
         <div variant="outlined">
