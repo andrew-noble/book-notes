@@ -107,7 +107,7 @@ app.get("/search", async (req, res) => {
       [query]
     );
 
-    res.status(200).json(response.rows);
+    res.status(200).json(result.rows);
   } catch (e) {
     res.status(500).send({ error: "Server side error" });
     console.log("Error executing search: " + e);
