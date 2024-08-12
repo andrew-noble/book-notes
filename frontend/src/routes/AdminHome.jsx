@@ -4,7 +4,7 @@ import BookCard from "../components/public/BookCard";
 
 export default function AdminHome() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <>
       <BookCard />
       <div className="py-4 flex flex-row place-content-center">
         <ConfirmButton
@@ -15,6 +15,6 @@ export default function AdminHome() {
         </ConfirmButton>
         <Button>Edit</Button>
       </div>
-    </div>
+    </>
   );
 }
