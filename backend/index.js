@@ -1,12 +1,18 @@
 import express from "express";
 import "dotenv/config";
 import pg from "pg";
+import cors from "cors";
 
 const db_pw = process.env.DB_PASSWORD;
 
 const app = express();
 app.use(express.json());
 app.use(express.static("public"));
+
+const corsOptions = {
+  origin: ["http://localhost:5173"],
+};
+app.use(cors(corsOptions));
 
 const port = 3000;
 const db = new pg.Client({
@@ -125,7 +131,6 @@ app.get("/sort", async (req, res) => {
     }
   } catch (e) {
     res.status(500).send({ error: "Server side error" });
-
     console.log("Error sorting the books:" + e);
   }
 });
