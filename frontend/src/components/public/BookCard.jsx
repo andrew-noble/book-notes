@@ -1,17 +1,8 @@
 import React from "react";
 
-export default function BookCard() {
-  const book = {
-    title: "Think",
-    author: "Simon Blackburn",
-    notes: "Just okay",
-    genre: "Philosophy",
-    date: "2024-08-07",
-    rating: "2",
-  };
-
+export default function BookCard({ book }) {
   return (
-    <div className="grid grid-cols-3">
+    <div className="grid grid-cols-3 my-5">
       <div className="col-span-1 bg-slate-300 p-6">
         <ul>
           <li>
