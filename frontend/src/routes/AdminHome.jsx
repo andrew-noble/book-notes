@@ -8,9 +8,9 @@ export default function AdminHome({ books }) {
     <>
       {books.map((book) => {
         return (
-          <div className="outline">
+          <div className="outline my-5">
             <BookCard book={book} />
-            <div className="py-4 flex flex-row place-content-center">
+            <div className="py-1 flex flex-row place-content-center">
               <ConfirmButton
                 // confirmAction={confirmAction}
                 confirmText="Really Delete?"

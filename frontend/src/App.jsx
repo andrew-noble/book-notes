@@ -1,6 +1,5 @@
 import { React, useReducer, useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
 import PublicHome from "./routes/PublicHome";
 import AdminHome from "./routes/AdminHome";
 import Header from "./components/public/Header";
@@ -15,6 +14,7 @@ function reducer(state, action) {
   switch (action.type) {
     case "init-books":
       return action.payload;
+
     case "create-book":
       createBook(action.payload);
       return [...state, action.payload];
@@ -40,7 +40,7 @@ export default function App() {
     //necessary wrapper bc useEffect doesn't support async/await
     async function fetchData() {
       try {
-        const books = await axios.get("http://localhost:3000/");
+        const books = readAllBooks();
         dispatch({ type: "init-books", payload: books.data });
         setIsLoaded(true);
       } catch (e) {
@@ -50,15 +50,6 @@ export default function App() {
 
     fetchData();
   }, []);
-
-  //effect for writing to backend (CUD operations). Only runs when booklist changes.
-  useEffect(() => {
-    async function fetchData() {
-      const books = await axios.get("http://localhost:3000/");
-    }
-
-    fetchData();
-  }, [books]);
 
   return (
     <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
