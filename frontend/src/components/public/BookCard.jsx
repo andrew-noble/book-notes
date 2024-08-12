@@ -12,7 +12,7 @@ export default function BookCard() {
 
   return (
     <div className="grid grid-cols-3">
-      <div className="col-span-1 bg-orange-500">
+      <div className="col-span-1 bg-slate-300 p-6">
         <ul>
           <li>
             <h2 className="font-bold">{book.title}</h2>
@@ -23,7 +23,7 @@ export default function BookCard() {
           <li>Rating: {book.rating}/3</li>
         </ul>
       </div>
-      <div className="col-span-2 bg-orange-200">{book.notes}</div>
+      <div className="col-span-2 bg-slate-200 p-6">{book.notes}</div>
     </div>
   );
 }
