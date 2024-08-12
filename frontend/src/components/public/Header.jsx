@@ -1,18 +1,9 @@
 import React from "react";
-import { Typography } from "@mui/material";
 
 export default function Header() {
   return (
-    <header>
-      <Typography
-        variant="h2"
-        component="h1"
-        color="primary"
-        align="center"
-        gutterBottom
-      >
-        🎲🔥 Hot Dice Scoreboard 🔥🎲
-      </Typography>
+    <header className="bg-blue-500 text-white p-4">
+      <p>Book Notes</p>
     </header>
   );
 }

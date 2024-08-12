@@ -11,7 +11,7 @@ const isPublic = import.meta.env.VITE_IS_PUBLIC;
 
 export default function App() {
   return (
-    <>
+    <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
       <Header />
       <BrowserRouter>
         <Routes>
@@ -19,6 +19,6 @@ export default function App() {
         </Routes>
       </BrowserRouter>
       <Footer />
-    </>
+    </div>
   );
 }
