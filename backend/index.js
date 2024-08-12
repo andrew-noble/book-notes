@@ -29,7 +29,7 @@ app.get("/", async (req, res) => {
   console.log("Request for all book notes received");
   try {
     const response = await db.query(
-      "SELECT id, title, author, isbn, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, notes FROM books ORDER BY title DESC"
+      "SELECT id, title, author, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, notes FROM books ORDER BY title DESC"
     );
     res.status(200).json(response.rows);
   } catch (e) {
@@ -43,11 +43,10 @@ app.post("/", async (req, res) => {
   try {
     const newEntry = req.body.newEntry;
     await db.query(
-      "INSERT INTO books VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7)",
+      "INSERT INTO books VALUES (DEFAULT, $1, $2, $3, $4, $5, $6)",
       [
         newEntry.title,
         newEntry.author,
-        newEntry.isbn,
         newEntry.notes,
         newEntry.genre,
         newEntry.date,
@@ -79,11 +78,10 @@ app.patch("/edit/:id", async (req, res) => {
     const updatedEntry = req.body.updatedEntry;
 
     await db.query(
-      "UPDATE books SET title = $1, author = $2, isbn = $3, notes = $4, genre = $5, date = $6, rating = $7 WHERE id = $8",
+      "UPDATE books SET title = $1, author = $2, notes = $3, genre = $4, date = $5, rating = $6 WHERE id = $7",
       [
         updatedEntry.title,
         updatedEntry.author,
-        updatedEntry.isbn,
         updatedEntry.notes,
         updatedEntry.genre,
         updatedEntry.date,
@@ -103,7 +101,7 @@ app.get("/search", async (req, res) => {
   try {
     const query = req.query.s.toLowerCase();
     const result = await db.query(
-      "SELECT id, title, author, isbn, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, note FROM books WHERE LOWER(title) LIKE '%' || $1 || '%' OR LOWER(author) LIKE '%' || $1 || '%'",
+      "SELECT id, title, author, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, note FROM books WHERE LOWER(title) LIKE '%' || $1 || '%' OR LOWER(author) LIKE '%' || $1 || '%'",
       [query]
     );
 
@@ -124,7 +122,7 @@ app.get("/sort", async (req, res) => {
       );
     } else {
       const response = await db.query(
-        "SELECT id, title, author, isbn, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, notes FROM books ORDER BY $1 DESC",
+        "SELECT id, title, author, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, notes FROM books ORDER BY $1 DESC",
         [sort]
       );
       res.status(200).json(response.rows);
