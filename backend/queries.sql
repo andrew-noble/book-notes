@@ -9,3 +9,16 @@ CREATE TABLE books
     date date,
     rating integer CHECK (rating < 3),
 );
+
+--same as SELECT *, but formats the date
+
+SELECT 
+      id, 
+      title, 
+      author, 
+      isbn, 
+      TO_CHAR(date, 'YYYY-MM-DD') AS date,
+      rating,
+      review
+    FROM books 
+    ORDER BY title DESC

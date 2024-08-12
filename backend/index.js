@@ -18,23 +18,14 @@ const db = new pg.Client({
 });
 db.connect();
 
-function getCover(isbn) {
-  return `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
-}
-
 //gets all the book note entries
 app.get("/", async (req, res) => {
   console.log("Request for all book notes received");
   try {
-    const response = await db.query(`SELECT * FROM books ORDER BY title DESC`);
-    //necessary date parsing and cover fetching
-    const bookList = response.rows.map((entry) => ({
-      ...entry,
-      date: entry.date.toISOString().split("T")[0],
-      cover: getCover(entry.isbn),
-    }));
-
-    res.status(200).json(bookList);
+    const response = await db.query(
+      "SELECT id, title, author, isbn, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, notes FROM books ORDER BY title DESC"
+    );
+    res.status(200).json(response.rows);
   } catch (e) {
     res.status(500).send({ error: "Server side error" });
     console.log("Error with displaying the books: " + e);
@@ -106,16 +97,11 @@ app.get("/search", async (req, res) => {
   try {
     const query = req.query.s.toLowerCase();
     const result = await db.query(
-      "SELECT * FROM books WHERE LOWER(title) LIKE '%' || $1 || '%' OR LOWER(author) LIKE '%' || $1 || '%'",
+      "SELECT id, title, author, isbn, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, note FROM books WHERE LOWER(title) LIKE '%' || $1 || '%' OR LOWER(author) LIKE '%' || $1 || '%'",
       [query]
     );
 
-    const bookList = response.rows.map((entry) => {
-      entry.date = entry.date.toISOString().split("T")[0];
-      entry.cover = getCover(entry.isbn);
-    });
-
-    res.status(200).json(bookList);
+    res.status(200).json(response.rows);
   } catch (e) {
     res.status(500).send({ error: "Server side error" });
     console.log("Error executing search: " + e);
@@ -125,23 +111,17 @@ app.get("/search", async (req, res) => {
 app.get("/sort", async (req, res) => {
   try {
     const { sort } = req.query;
-
     if (!["title", "date", "rating"].includes(sort)) {
       console.log("issue");
       throw new Error(
         "Invalid sort mode. You can sort by recency, title, or rating"
       );
     } else {
-      const response = await db.query("SELECT * FROM books ORDER BY $1 DESC", [
-        sort,
-      ]);
-      //necessary date parsing and cover fetching
-      const bookList = response.rows.map((entry) => {
-        entry.date = entry.date.toISOString().split("T")[0];
-        entry.cover = getCover(entry.isbn);
-      });
-
-      res.status(200).json(bookList);
+      const response = await db.query(
+        "SELECT id, title, author, isbn, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, notes FROM books ORDER BY $1 DESC",
+        [sort]
+      );
+      res.status(200).json(response.rows);
     }
   } catch (e) {
     res.status(500).send({ error: "Server side error" });
