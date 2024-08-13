@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
-export default function Button({ action }) {
+export default function Button(props) {
+  const { action } = props;
+
   return (
     <div className="p-4">
       <button

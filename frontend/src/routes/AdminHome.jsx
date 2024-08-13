@@ -8,7 +8,7 @@ export default function AdminHome({ books, dispatch, handleEditNav }) {
     <>
       {books.map((book) => {
         return (
-          <div className="outline outline-1 my-5">
+          <div key={book.id} className="outline outline-1 my-5">
             <BookCard book={book} />
             <div className="py-1 flex flex-row place-content-center">
               <ConfirmButton

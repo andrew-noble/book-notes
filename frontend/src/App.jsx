@@ -4,6 +4,7 @@ import PublicHome from "./routes/PublicHome";
 import AdminHome from "./routes/AdminHome";
 import Header from "./components/public/Header";
 import Footer from "./components/public/Footer";
+import BookForm from "./components/private/BookForm";
 import { createBook, readAllBooks, updateBook, deleteBook } from "./api";
 import "./App.css";
 
@@ -34,11 +35,6 @@ function reducer(state, action) {
 export default function App() {
   const [state, dispatch] = useReducer(reducer, []);
   const [isLoaded, setIsLoaded] = useState(false);
-  const navigate = useNavigate();
-
-  function handleEditNav(book) {
-    navigate(`/edit/${book.id}`);
-  }
 
   //the "R" in CRUD
   useEffect(() => {

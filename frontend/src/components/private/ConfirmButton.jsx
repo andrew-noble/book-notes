@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-export default function ConfirmButton({ action, confirmText }) {
+export default function ConfirmButton(props) {
   const [confirm, setConfirm] = useState(false);
+  const { action, confirmText } = props;
 
   return (
     <div className="p-4">

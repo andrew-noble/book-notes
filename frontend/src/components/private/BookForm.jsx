@@ -1,16 +1,18 @@
-import ConfirmButton from "../components/private/ConfirmButton";
-import Button from "../components/private/Button";
+import Button from "./Button";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function BookForm({ books, dispatch }) {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const params = useParams();
+  const id = parseInt(params.id);
   const thisBook = books.find((book) => book.id === id);
+
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(thisBook);
 
   function handleChange(event) {
-    const { value } = event.target;
+    const { value, name } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
   function handleBack() {
@@ -75,9 +77,7 @@ export default function BookForm({ books, dispatch }) {
         value={formData.notes}
         onChange={handleChange}
         placeholder="notes"
-      >
-        <textarea></textarea>
-      </input>
+      ></input>
       <Button action={handleSubmit}>Save Changes</Button>
       <Button action={handleBack}>Back</Button>
     </form>
