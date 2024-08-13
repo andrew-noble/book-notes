@@ -5,7 +5,7 @@ const API_URL = "http://localhost:3000/";
 export const createBook = async (book) =>
   await axios.post(
     API_URL,
-    { book: book },
+    { newEntry: book },
     {
       headers: {
         "Content-Type": "application/json",
@@ -17,8 +17,8 @@ export const readAllBooks = async () => await axios.get(API_URL);
 
 export const updateBook = async (id, book) =>
   axios.patch(
-    `${API_URL}/edit/${id}`,
-    { book: book },
+    `${API_URL}edit/${id}`,
+    { updatedEntry: book },
     {
       headers: {
         "Content-Type": "application/json",
@@ -26,6 +26,6 @@ export const updateBook = async (id, book) =>
     }
   );
 
-export const deleteBook = async (id) => axios.delete(`${API_URL}/delete/${id}`);
+export const deleteBook = async (id) => axios.delete(`${API_URL}delete/${id}`);
 
 //TO-DO later: integrate sorting and searching API calls (will require backend work)

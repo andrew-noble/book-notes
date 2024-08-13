@@ -3,34 +3,31 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function BookForm({ books, dispatch }) {
-  const params = useParams();
-  const id = parseInt(params.id);
-  const thisBook = books.find((book) => book.id === id);
+  const { id } = useParams();
+  const thisBook = id ? books.find((book) => book.id === parseInt(id)) : null;
 
   const navigate = useNavigate();
-  const [formData, setFormData] = useState(thisBook);
+  const [formData, setFormData] = useState(
+    thisBook || {
+      title: "",
+      author: "",
+      genre: "",
+      date: "",
+      rating: "",
+      notes: "",
+    }
+  );
 
   function handleChange(event) {
     const { value, name } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleBack() {
-    if (formChanged) {
-      if (
-        window.confirm(
-          "You have unsaved changes. Are you sure you want to leave?"
-        )
-      ) {
-        navigate(-1);
-      }
-    } else {
-      navigate(-1);
-    }
-  }
-
   function handleSubmit() {
-    dispatch({ type: "update-book", payload: thisBook });
+    id
+      ? dispatch({ type: "update-book", payload: formData })
+      : dispatch({ type: "create-book", payload: formData });
+
     navigate("/");
   }
 
@@ -48,9 +45,9 @@ export default function BookForm({ books, dispatch }) {
           <input
             type="text"
             name="title"
+            required
             value={formData.title}
             onChange={handleChange}
-            placeholder="title"
             className={inputClass}
           ></input>
 
@@ -58,9 +55,9 @@ export default function BookForm({ books, dispatch }) {
           <input
             type="text"
             name="author"
+            required
             value={formData.author}
             onChange={handleChange}
-            placeholder="author"
             className={inputClass}
           ></input>
 
@@ -68,9 +65,9 @@ export default function BookForm({ books, dispatch }) {
           <input
             type="text"
             name="genre"
+            required
             value={formData.genre}
             onChange={handleChange}
-            placeholder="genre"
             className={inputClass}
           ></input>
 
@@ -78,9 +75,9 @@ export default function BookForm({ books, dispatch }) {
           <input
             type="date"
             name="date"
+            required
             value={formData.date}
             onChange={handleChange}
-            placeholder="date"
             className={inputClass}
           ></input>
 
@@ -88,9 +85,9 @@ export default function BookForm({ books, dispatch }) {
           <input
             type="number"
             name="rating"
+            required
             value={formData.rating}
             onChange={handleChange}
-            placeholder="rating out of 3"
             className={inputClass}
           ></input>
         </fieldset>
@@ -108,7 +105,6 @@ export default function BookForm({ books, dispatch }) {
         </fieldset>
       </form>
       <Button action={handleSubmit}>Save Changes</Button>
-      <Button action={handleBack}>Back</Button>
     </div>
   );
 }

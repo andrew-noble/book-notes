@@ -41,10 +41,10 @@ app.get("/", async (req, res) => {
 //add new entry
 app.post("/", async (req, res) => {
   console.log("Request to add a book received");
+  const newEntry = req.body.newEntry;
   try {
-    const newEntry = req.body.newEntry;
     await db.query(
-      "INSERT INTO books VALUES (DEFAULT, $1, $2, $3, $4, $5, $6)",
+      "INSERT INTO books VALUES (DEFAULT, $1, $2, $3, $4, $5, $6::integer)",
       [
         newEntry.title,
         newEntry.author,
@@ -81,7 +81,7 @@ app.patch("/edit/:id", async (req, res) => {
     const updatedEntry = req.body.updatedEntry;
 
     await db.query(
-      "UPDATE books SET title = $1, author = $2, notes = $3, genre = $4, date = $5, rating = $6 WHERE id = $7",
+      "UPDATE books SET title = $1, author = $2, notes = $3, genre = $4, date = $5, rating = $6::integer WHERE id = $7",
       [
         updatedEntry.title,
         updatedEntry.author,

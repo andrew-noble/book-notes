@@ -14,19 +14,23 @@ const isPublic = import.meta.env.VITE_IS_PUBLIC;
 function reducer(state, action) {
   switch (action.type) {
     case "init-books":
+      console.log("Books loaded from backend");
       return action.payload;
 
     case "create-book":
+      console.log("New book created");
       createBook(action.payload);
       return [...state, action.payload];
 
     case "update-book":
+      console.log("Book edited");
       updateBook(action.payload.id, action.payload);
       return state.map((book) =>
         book.id === action.payload.id ? action.payload : book
       );
 
     case "delete-book":
+      console.log("Books deleted");
       deleteBook(action.payload.id);
       return state.filter((book) => book.id != action.payload.id);
   }
@@ -81,7 +85,10 @@ export default function App() {
                 path="/edit/:id"
                 element={<BookForm dispatch={dispatch} books={state} />}
               ></Route>
-              {/* Add a book add route here */}
+              <Route
+                path="/add"
+                element={<BookForm dispatch={dispatch} books={state} />}
+              ></Route>
             </Routes>
           </BrowserRouter>
         ) : (

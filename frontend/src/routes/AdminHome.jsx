@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 export default function AdminHome({ books, dispatch, handleEditNav }) {
   return (
     <>
+      <Button>
+        <Link to={"/add"}>Add a Book</Link>
+      </Button>
       {books.map((book) => {
         return (
           <div key={book.id} className="outline outline-1 my-5">
