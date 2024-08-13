@@ -32,7 +32,7 @@ function reducer(state, action) {
 }
 
 export default function App() {
-  const [books, dispatch] = useReducer(reducer, []);
+  const [state, dispatch] = useReducer(reducer, []);
   const [isLoaded, setIsLoaded] = useState(false);
 
   //the "R" in CRUD
@@ -40,8 +40,8 @@ export default function App() {
     //necessary wrapper bc useEffect doesn't support async/await
     async function fetchData() {
       try {
-        const books = readAllBooks();
-        dispatch({ type: "init-books", payload: books.data });
+        const result = await readAllBooks();
+        dispatch({ type: "init-books", payload: result.data });
         setIsLoaded(true);
       } catch (e) {
         console.log("Error fetching data from API: ", e);
@@ -62,9 +62,9 @@ export default function App() {
                 path="/"
                 element={
                   isPublic ? (
-                    <PublicHome books={books} />
+                    <PublicHome books={state} dispatch={dispatch} />
                   ) : (
-                    <AdminHome books={books} />
+                    <AdminHome books={state} dispatch={dispatch} />
                   )
                 }
               />
