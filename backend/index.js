@@ -40,6 +40,7 @@ app.get("/", async (req, res) => {
 
 //add new entry
 app.post("/", async (req, res) => {
+  console.log("Request to add a book received");
   try {
     const newEntry = req.body.newEntry;
     await db.query(
@@ -61,6 +62,7 @@ app.post("/", async (req, res) => {
 });
 
 app.delete("/delete/:id", async (req, res) => {
+  console.log("Request to delete a book received");
   try {
     const id = parseInt(req.params.id);
 
@@ -73,6 +75,7 @@ app.delete("/delete/:id", async (req, res) => {
 });
 
 app.patch("/edit/:id", async (req, res) => {
+  console.log("Request to edit a book received");
   try {
     const id = parseInt(req.params.id);
     const updatedEntry = req.body.updatedEntry;
@@ -98,6 +101,8 @@ app.patch("/edit/:id", async (req, res) => {
 });
 
 app.get("/search", async (req, res) => {
+  console.log("Request for all book notes received");
+
   try {
     const query = req.query.s.toLowerCase();
     const result = await db.query(
@@ -113,6 +118,8 @@ app.get("/search", async (req, res) => {
 });
 
 app.get("/sort", async (req, res) => {
+  console.log("Request for all book notes received");
+
   try {
     const { sort } = req.query;
     if (!["title", "date", "rating"].includes(sort)) {
