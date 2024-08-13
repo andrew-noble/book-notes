@@ -10,7 +10,7 @@ import "./App.css";
 
 const isPublic = import.meta.env.VITE_IS_PUBLIC;
 
-//The "CUD" in CRUD
+//internal state reducer. Mirrors the database vis the handle functions below.
 function reducer(state, action) {
   switch (action.type) {
     case "init-books":
@@ -18,20 +18,14 @@ function reducer(state, action) {
       return action.payload;
 
     case "create-book":
-      console.log("New book created");
-      createBook(action.payload);
       return [...state, action.payload];
 
     case "update-book":
-      console.log("Book edited");
-      updateBook(action.payload.id, action.payload);
       return state.map((book) =>
         book.id === action.payload.id ? action.payload : book
       );
 
     case "delete-book":
-      console.log("Books deleted");
-      deleteBook(action.payload.id);
       return state.filter((book) => book.id != action.payload.id);
   }
 }
@@ -56,6 +50,25 @@ export default function App() {
     fetchData();
   }, []);
 
+  //the "CUD" in CRUD
+  function handleCreate(book) {
+    console.log("New book created");
+    createBook(book); //update DB w/ api call
+    dispatch({ type: "create-book", payload: book }); //update internal state to match
+  }
+
+  function handleUpdate(book) {
+    console.log("Book edited");
+    updateBook(book); //external
+    dispatch({ type: "update-book", payload: book }); //internal
+  }
+
+  function handleDelete(book) {
+    console.log("Books deleted");
+    deleteBook(book); //external
+    dispatch({ type: "delete-book", payload: book }); //internal
+  }
+
   return (
     <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
       <Header />
@@ -67,27 +80,23 @@ export default function App() {
                 path="/"
                 element={
                   isPublic ? (
-                    <PublicHome
-                      className="max-w-4xl"
-                      books={state}
-                      dispatch={dispatch}
-                    />
+                    <PublicHome className="max-w-4xl" books={state} />
                   ) : (
                     <AdminHome
                       className="max-w-4xl"
                       books={state}
-                      dispatch={dispatch}
+                      handleDelete={handleDelete}
                     />
                   )
                 }
               />
               <Route
                 path="/edit/:id"
-                element={<BookForm dispatch={dispatch} books={state} />}
+                element={<BookForm handleUpdate={handleUpdate} books={state} />}
               ></Route>
               <Route
                 path="/add"
-                element={<BookForm dispatch={dispatch} books={state} />}
+                element={<BookForm handleCreate={handleCreate} books={state} />}
               ></Route>
             </Routes>
           </BrowserRouter>

@@ -3,7 +3,7 @@ import Button from "../components/private/Button";
 import BookCard from "../components/public/BookCard";
 import { Link } from "react-router-dom";
 
-export default function AdminHome({ books, dispatch, handleEditNav }) {
+export default function AdminHome({ books, handleDelete }) {
   return (
     <>
       <Button>
@@ -15,7 +15,7 @@ export default function AdminHome({ books, dispatch, handleEditNav }) {
             <BookCard book={book} />
             <div className="py-1 flex flex-row place-content-center">
               <ConfirmButton
-                action={() => dispatch({ type: "delete-book", payload: book })}
+                action={() => handleDelete(book)}
                 confirmText="Really Delete?"
               >
                 Delete

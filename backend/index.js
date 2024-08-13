@@ -41,20 +41,20 @@ app.get("/", async (req, res) => {
 //add new entry
 app.post("/", async (req, res) => {
   console.log("Request to add a book received");
-  const newEntry = req.body.newEntry;
   try {
-    await db.query(
-      "INSERT INTO books VALUES (DEFAULT, $1, $2, $3, $4, $5, $6::integer)",
+    const newEntry = req.body.newEntry;
+    const response = await db.query(
+      "INSERT INTO books (title, author, genre, date, rating, notes) VALUES ($1, $2, $3, $4, $5::integer, $6) RETURNING id, title, author, genre, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, notes",
       [
         newEntry.title,
         newEntry.author,
-        newEntry.notes,
         newEntry.genre,
         newEntry.date,
         newEntry.rating,
+        newEntry.notes,
       ]
     );
-    res.status(201).json(newEntry);
+    res.status(201).json(response.rows[0]);
   } catch (e) {
     res.status(500).send({ error: "Server side error" });
     console.log("Error adding a new entry: " + e);

@@ -2,7 +2,7 @@ import Button from "./Button";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export default function BookForm({ books, dispatch }) {
+export default function BookForm({ books, handleCreate, handleUpdate }) {
   const { id } = useParams();
   const thisBook = id ? books.find((book) => book.id === parseInt(id)) : null;
 
@@ -24,10 +24,7 @@ export default function BookForm({ books, dispatch }) {
   }
 
   function handleSubmit() {
-    id
-      ? dispatch({ type: "update-book", payload: formData })
-      : dispatch({ type: "create-book", payload: formData });
-
+    id ? handleUpdate(formData) : handleCreate(formData);
     navigate("/");
   }
 
