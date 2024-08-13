@@ -34,52 +34,81 @@ export default function BookForm({ books, dispatch }) {
     navigate("/");
   }
 
+  const inputClass =
+    "block px-3 py-2 my-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500";
+  const fieldsetClass = "mb-6 p-8 rounded-lg bg-slate-200";
+  const legendClass = "p-2 rounded-lg bg-slate-500 text-white";
+
   return (
-    <form>
-      <input
-        type="text"
-        name="title"
-        value={formData.title}
-        onChange={handleChange}
-        placeholder="title"
-      ></input>
-      <input
-        type="text"
-        name="author"
-        value={formData.author}
-        onChange={handleChange}
-        placeholder="author"
-      ></input>
-      <input
-        type="text"
-        name="genre"
-        value={formData.genre}
-        onChange={handleChange}
-        placeholder="genre"
-      ></input>
-      <input
-        type="date"
-        name="date"
-        value={formData.date}
-        onChange={handleChange}
-        placeholder="date"
-      ></input>
-      <input
-        type="number"
-        name="rating"
-        value={formData.rating}
-        onChange={handleChange}
-        placeholder="rating out of 3"
-      ></input>
-      <input
-        type="text"
-        name="notes"
-        value={formData.notes}
-        onChange={handleChange}
-        placeholder="notes"
-      ></input>
+    <div className="w-auto">
+      <form className="flex flex-row gap-8">
+        <fieldset className={fieldsetClass}>
+          <legend className={legendClass}>Book Details</legend>
+          <label htmlFor="title">Title of the book:</label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="title"
+            className={inputClass}
+          ></input>
+
+          <label htmlFor="author">Author's name:</label>
+          <input
+            type="text"
+            name="author"
+            value={formData.author}
+            onChange={handleChange}
+            placeholder="author"
+            className={inputClass}
+          ></input>
+
+          <label htmlFor="genre">Genre (whatever you want):</label>
+          <input
+            type="text"
+            name="genre"
+            value={formData.genre}
+            onChange={handleChange}
+            placeholder="genre"
+            className={inputClass}
+          ></input>
+
+          <label htmlFor="date">Date completed:</label>
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            placeholder="date"
+            className={inputClass}
+          ></input>
+
+          <label htmlFor="rating">Rating (out of 3):</label>
+          <input
+            type="number"
+            name="rating"
+            value={formData.rating}
+            onChange={handleChange}
+            placeholder="rating out of 3"
+            className={inputClass}
+          ></input>
+        </fieldset>
+
+        <fieldset className={`${fieldsetClass} grow`}>
+          <legend className={legendClass}>Thoughts on the book:</legend>
+          <textarea
+            type="text"
+            name="notes"
+            value={formData.notes}
+            onChange={handleChange}
+            placeholder="notes"
+            className={`${inputClass} h-96 w-full`}
+          ></textarea>
+        </fieldset>
+      </form>
       <Button action={handleSubmit}>Save Changes</Button>
       <Button action={handleBack}>Back</Button>
-    </form>
+    </div>
   );
 }

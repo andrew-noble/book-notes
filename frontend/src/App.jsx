@@ -55,7 +55,7 @@ export default function App() {
   return (
     <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
       <Header />
-      <main className="max-w-4xl container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8">
         {isLoaded ? (
           <BrowserRouter>
             <Routes>
@@ -63,9 +63,17 @@ export default function App() {
                 path="/"
                 element={
                   isPublic ? (
-                    <PublicHome books={state} dispatch={dispatch} />
+                    <PublicHome
+                      className="max-w-4xl"
+                      books={state}
+                      dispatch={dispatch}
+                    />
                   ) : (
-                    <AdminHome books={state} dispatch={dispatch} />
+                    <AdminHome
+                      className="max-w-4xl"
+                      books={state}
+                      dispatch={dispatch}
+                    />
                   )
                 }
               />
