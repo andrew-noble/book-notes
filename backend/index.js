@@ -65,9 +65,10 @@ app.delete("/delete/:id", async (req, res) => {
   console.log("Request to delete a book received");
   try {
     const id = parseInt(req.params.id);
-
     await db.query("DELETE FROM books WHERE id = $1", [id]);
-    res.status(204);
+
+    //the .send(), even though empty, is critical for promise chain resolution on the frontend!
+    res.status(204).send();
   } catch (e) {
     res.status(500).send({ error: "Server side error" });
     console.log("Error deleting an entry: " + e);
@@ -80,8 +81,8 @@ app.patch("/edit/:id", async (req, res) => {
     const id = parseInt(req.params.id);
     const updatedEntry = req.body.updatedEntry;
 
-    await db.query(
-      "UPDATE books SET title = $1, author = $2, notes = $3, genre = $4, date = $5, rating = $6::integer WHERE id = $7",
+    const response = await db.query(
+      "UPDATE books SET title = $1, author = $2, notes = $3, genre = $4, date = $5, rating = $6::integer WHERE id = $7 RETURNING id, title, author, genre, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, notes",
       [
         updatedEntry.title,
         updatedEntry.author,
@@ -93,7 +94,7 @@ app.patch("/edit/:id", async (req, res) => {
       ]
     );
 
-    res.status(200).json(updatedEntry);
+    res.status(200).json(response.rows[0]);
   } catch (e) {
     res.status(500).send({ error: "Server side error" });
     console.log("Error updaing an entry: " + e);

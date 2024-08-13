@@ -16,10 +16,13 @@ export const createBook = async (book) => {
   return response.data;
 };
 
-export const readAllBooks = async () => await axios.get(API_URL);
+export const readAllBooks = async () => {
+  const response = await axios.get(API_URL);
+  return response.data;
+};
 
-export const updateBook = async (book) =>
-  axios.patch(
+export const updateBook = async (book) => {
+  const response = await axios.patch(
     `${API_URL}edit/${book.id}`,
     { updatedEntry: book },
     {
@@ -29,7 +32,13 @@ export const updateBook = async (book) =>
     }
   );
 
-export const deleteBook = async (book) =>
-  axios.delete(`${API_URL}delete/${book.id}`);
+  return response.data;
+};
+
+export const deleteBook = async (book) => {
+  const response = await axios.delete(`${API_URL}delete/${book.id}`);
+
+  return response.status;
+};
 
 //TO-DO later: integrate sorting and searching API calls (will require backend work)

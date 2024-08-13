@@ -26,7 +26,7 @@ function reducer(state, action) {
       );
 
     case "delete-book":
-      return state.filter((book) => book.id != action.payload.id);
+      return state.filter((book) => book.id !== action.payload.id);
   }
 }
 
@@ -40,7 +40,7 @@ export default function App() {
     async function fetchData() {
       try {
         const result = await readAllBooks();
-        dispatch({ type: "init-books", payload: result.data });
+        dispatch({ type: "init-books", payload: result });
         setIsLoaded(true);
       } catch (e) {
         console.log("Error fetching data from API: ", e);
@@ -51,22 +51,22 @@ export default function App() {
   }, []);
 
   //the "CUD" in CRUD
-  function handleCreate(book) {
+  async function handleCreate(book) {
     console.log("New book created");
-    createBook(book); //update DB w/ api call
-    dispatch({ type: "create-book", payload: book }); //update internal state to match
+    const newBook = await createBook(book); //update db via api call
+    dispatch({ type: "create-book", payload: newBook }); //then update internal state
   }
 
-  function handleUpdate(book) {
+  async function handleUpdate(book) {
     console.log("Book edited");
-    updateBook(book); //external
-    dispatch({ type: "update-book", payload: book }); //internal
+    const updatedBook = await updateBook(book);
+    dispatch({ type: "update-book", payload: updatedBook });
   }
 
-  function handleDelete(book) {
-    console.log("Books deleted");
-    deleteBook(book); //external
-    dispatch({ type: "delete-book", payload: book }); //internal
+  async function handleDelete(book) {
+    console.log("Book deleted");
+    await deleteBook(book);
+    dispatch({ type: "delete-book", payload: book });
   }
 
   return (
