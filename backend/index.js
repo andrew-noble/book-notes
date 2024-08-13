@@ -29,7 +29,7 @@ app.get("/", async (req, res) => {
   console.log("Request for all book notes received");
   try {
     const response = await db.query(
-      "SELECT id, title, author, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, notes FROM books ORDER BY title DESC"
+      "SELECT id, title, author, genre, TO_CHAR(date, 'YYYY-MM-DD') AS date, rating, notes FROM books ORDER BY title DESC"
     );
     res.status(200).json(response.rows);
   } catch (e) {
