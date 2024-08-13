@@ -1,5 +1,5 @@
 import { React, useReducer, useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import PublicHome from "./routes/PublicHome";
 import AdminHome from "./routes/AdminHome";
 import Header from "./components/public/Header";
@@ -34,6 +34,11 @@ function reducer(state, action) {
 export default function App() {
   const [state, dispatch] = useReducer(reducer, []);
   const [isLoaded, setIsLoaded] = useState(false);
+  const navigate = useNavigate();
+
+  function handleEditNav(book) {
+    navigate(`/edit/${book.id}`);
+  }
 
   //the "R" in CRUD
   useEffect(() => {
@@ -68,6 +73,11 @@ export default function App() {
                   )
                 }
               />
+              <Route
+                path="/edit/:id"
+                element={<BookForm dispatch={dispatch} books={state} />}
+              ></Route>
+              {/* Add a book add route here */}
             </Routes>
           </BrowserRouter>
         ) : (

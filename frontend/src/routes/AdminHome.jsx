@@ -1,8 +1,9 @@
 import ConfirmButton from "../components/private/ConfirmButton";
 import Button from "../components/private/Button";
 import BookCard from "../components/public/BookCard";
+import { Link } from "react-router-dom";
 
-export default function AdminHome({ books, dispatch }) {
+export default function AdminHome({ books, dispatch, handleEditNav }) {
   return (
     <>
       {books.map((book) => {
@@ -16,7 +17,9 @@ export default function AdminHome({ books, dispatch }) {
               >
                 Delete
               </ConfirmButton>
-              <Button>Edit</Button>
+              <Button>
+                <Link to={`/edit/${book.id}`}>Edit</Link>
+              </Button>
             </div>
           </div>
         );
