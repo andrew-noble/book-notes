@@ -33,8 +33,8 @@ app.get("/", async (req, res) => {
     );
     res.status(200).json(response.rows);
   } catch (e) {
-    res.status(500).send({ error: "Server side error" });
-    console.log("Error with displaying the books: " + e);
+    res.status(500).json({ error: e.message });
+    console.log(e.error);
   }
 });
 
@@ -56,7 +56,7 @@ app.post("/", async (req, res) => {
     );
     res.status(201).json(response.rows[0]);
   } catch (e) {
-    res.status(500).send({ error: "Server side error" });
+    res.status(500).json({ error: e.message });
     console.log("Error adding a new entry: " + e);
   }
 });
@@ -70,7 +70,7 @@ app.delete("/delete/:id", async (req, res) => {
     //the .send(), even though empty, is critical for promise chain resolution on the frontend!
     res.status(204).send();
   } catch (e) {
-    res.status(500).send({ error: "Server side error" });
+    res.status(500).json({ error: e.message });
     console.log("Error deleting an entry: " + e);
   }
 });
@@ -96,7 +96,7 @@ app.patch("/edit/:id", async (req, res) => {
 
     res.status(200).json(response.rows[0]);
   } catch (e) {
-    res.status(500).send({ error: "Server side error" });
+    res.status(500).json({ error: e.message });
     console.log("Error updaing an entry: " + e);
   }
 });
@@ -113,7 +113,7 @@ app.get("/search", async (req, res) => {
 
     res.status(200).json(result.rows);
   } catch (e) {
-    res.status(500).send({ error: "Server side error" });
+    res.status(500).json({ error: e.message });
     console.log("Error executing search: " + e);
   }
 });
@@ -136,7 +136,7 @@ app.get("/sort", async (req, res) => {
       res.status(200).json(response.rows);
     }
   } catch (e) {
-    res.status(500).send({ error: "Server side error" });
+    res.status(500).json({ error: e.message });
     console.log("Error sorting the books:" + e);
   }
 });
