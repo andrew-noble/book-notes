@@ -4,10 +4,12 @@ import BookList from "./components/BookList";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BookForm from "./components/BookForm";
-import { createBook, readAllBooks, updateBook, deleteBook } from "./api";
+import BookApi from "./api";
 import "./App.css";
 
-//internal state reducer. Mirrors the database vis the handle functions below.
+const api = BookApi();
+
+//internal state reducer. Mirrors the database via the handle functions below.
 function reducer(state, action) {
   switch (action.type) {
     case "init-books":
@@ -36,7 +38,7 @@ export default function App() {
     //necessary wrapper bc useEffect doesn't support async/await
     async function fetchData() {
       try {
-        const result = await readAllBooks();
+        const result = await api.readAllBooks();
         dispatch({ type: "init-books", payload: result });
         setIsLoaded(true);
       } catch (e) {
@@ -50,19 +52,19 @@ export default function App() {
   //the "CUD" in CRUD
   async function handleCreate(book) {
     console.log("New book created");
-    const newBook = await createBook(book); //update db via api call
+    const newBook = await api.createBook(book); //update external db via api call
     dispatch({ type: "create-book", payload: newBook }); //then update internal state
   }
 
   async function handleUpdate(book) {
     console.log("Book edited");
-    const updatedBook = await updateBook(book);
+    const updatedBook = await api.updateBook(book);
     dispatch({ type: "update-book", payload: updatedBook });
   }
 
   async function handleDelete(book) {
     console.log("Book deleted");
-    await deleteBook(book);
+    await api.deleteBook(book);
     dispatch({ type: "delete-book", payload: book });
   }
 
