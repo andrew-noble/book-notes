@@ -5,7 +5,7 @@ export default function ConfirmButton(props) {
   const { action, confirmText } = props;
 
   return (
-    <div className="p-4">
+    <div className="py-4 pr-2">
       {!confirm ? (
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

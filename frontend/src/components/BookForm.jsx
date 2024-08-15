@@ -105,15 +105,29 @@ export default function BookForm({ books, handleCreate, handleUpdate }) {
         </div>
         {/* Submit button (rather than onClick) used here to leverage my lazy, html-side form validation */}
         <button
-          className="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           type="submit"
         >
           {id ? "Save Changes" : "Add Book"}
         </button>
       </form>
+
       <Button>
         <Link to={"/"}>Home</Link>
       </Button>
+      <div>
+        <p>Here's how I think about the ratings:</p>
+        <ul>
+          <li>
+            1: Good enough to make it through, but not a lot of meaningful
+            information
+          </li>
+          <li>2: Interesting, little urge to re-read</li>
+          <li>
+            3: An amazing book, I know there is more for me to get in here
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }
