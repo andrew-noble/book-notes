@@ -1,14 +1,11 @@
 import { React, useReducer, useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import PublicHome from "./routes/PublicHome";
-import AdminHome from "./routes/AdminHome";
-import Header from "./components/public/Header";
-import Footer from "./components/public/Footer";
-import BookForm from "./components/private/BookForm";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import BookList from "./components/BookList";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import BookForm from "./components/BookForm";
 import { createBook, readAllBooks, updateBook, deleteBook } from "./api";
 import "./App.css";
-
-const isPublic = import.meta.env.VITE_IS_PUBLIC;
 
 //internal state reducer. Mirrors the database vis the handle functions below.
 function reducer(state, action) {
@@ -79,15 +76,11 @@ export default function App() {
               <Route
                 path="/"
                 element={
-                  isPublic ? (
-                    <PublicHome className="max-w-4xl" books={state} />
-                  ) : (
-                    <AdminHome
-                      className="max-w-4xl"
-                      books={state}
-                      handleDelete={handleDelete}
-                    />
-                  )
+                  <BookList
+                    className="max-w-4xl"
+                    books={state}
+                    handleDelete={handleDelete}
+                  />
                 }
               />
               <Route
@@ -104,7 +97,6 @@ export default function App() {
           )}
         </main>
       </BrowserRouter>
-
       <Footer />
     </div>
   );
