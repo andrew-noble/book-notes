@@ -111,10 +111,9 @@ export default function BookForm({ books, handleCreate, handleUpdate }) {
           {id ? "Save Changes" : "Add Book"}
         </button>
       </form>
-
-      <Button>
-        <Link to={"/"}>Home</Link>
-      </Button>
+      <Link to={"/"}>
+        <Button>Home</Button>
+      </Link>
       <div>
         <p>Here's how I think about the ratings:</p>
         <ul>

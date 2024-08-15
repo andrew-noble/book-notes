@@ -6,9 +6,10 @@ import { Link } from "react-router-dom";
 export default function AdminHome({ books, handleDelete }) {
   return (
     <>
-      <Button>
-        <Link to={"/add"}>Add a Book</Link>
-      </Button>
+      <Link to={"/add"}>
+        <Button>Add a Book</Button>
+      </Link>
+
       {books.map((book) => {
         return (
           <div key={book.id} className="outline outline-1 my-5">
@@ -20,9 +21,9 @@ export default function AdminHome({ books, handleDelete }) {
               >
                 Delete
               </ConfirmButton>
-              <Button>
-                <Link to={`/edit/${book.id}`}>Edit</Link>
-              </Button>
+              <Link to={`/edit/${book.id}`}>
+                <Button>Edit</Button>
+              </Link>
             </div>
           </div>
         );
