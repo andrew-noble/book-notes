@@ -71,10 +71,10 @@ export default function App() {
 
   return (
     <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
-      <Header />
-      <main className="container mx-auto px-4 py-8">
-        {isLoaded ? (
-          <BrowserRouter>
+      <BrowserRouter>
+        <Header />
+        <main className="container mx-auto px-4 py-8">
+          {isLoaded ? (
             <Routes>
               <Route
                 path="/"
@@ -99,11 +99,12 @@ export default function App() {
                 element={<BookForm handleCreate={handleCreate} books={state} />}
               ></Route>
             </Routes>
-          </BrowserRouter>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </main>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </main>
+      </BrowserRouter>
+
       <Footer />
     </div>
   );

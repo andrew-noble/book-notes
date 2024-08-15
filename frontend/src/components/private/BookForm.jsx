@@ -1,5 +1,5 @@
 import Button from "./Button";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function BookForm({ books, handleCreate, handleUpdate }) {
@@ -105,12 +105,15 @@ export default function BookForm({ books, handleCreate, handleUpdate }) {
         </div>
         {/* Submit button (rather than onClick) used here to leverage my lazy, html-side form validation */}
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           type="submit"
         >
-          Save Changes
+          {id ? "Save Changes" : "Add Book"}
         </button>
       </form>
+      <Button>
+        <Link to={"/"}>Home</Link>
+      </Button>
     </div>
   );
 }
