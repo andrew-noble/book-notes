@@ -23,7 +23,8 @@ export default function BookForm({ books, handleCreate, handleUpdate }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit() {
+  function handleSubmit(event) {
+    event.preventDefault();
     id ? handleUpdate(formData) : handleCreate(formData);
     navigate("/");
   }
@@ -35,73 +36,81 @@ export default function BookForm({ books, handleCreate, handleUpdate }) {
 
   return (
     <div className="w-auto">
-      <form className="flex flex-row gap-8">
-        <fieldset className={fieldsetClass}>
-          <legend className={legendClass}>Book Details</legend>
-          <label htmlFor="title">Title of the book:</label>
-          <input
-            type="text"
-            name="title"
-            required
-            value={formData.title}
-            onChange={handleChange}
-            className={inputClass}
-          ></input>
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-row gap-8">
+          <fieldset className={fieldsetClass}>
+            <legend className={legendClass}>Book Details</legend>
+            <label htmlFor="title">Title of the book:</label>
+            <input
+              type="text"
+              name="title"
+              required
+              value={formData.title}
+              onChange={handleChange}
+              className={inputClass}
+            ></input>
 
-          <label htmlFor="author">Author's name:</label>
-          <input
-            type="text"
-            name="author"
-            required
-            value={formData.author}
-            onChange={handleChange}
-            className={inputClass}
-          ></input>
+            <label htmlFor="author">Author's name:</label>
+            <input
+              type="text"
+              name="author"
+              required
+              value={formData.author}
+              onChange={handleChange}
+              className={inputClass}
+            ></input>
 
-          <label htmlFor="genre">Genre (whatever you want):</label>
-          <input
-            type="text"
-            name="genre"
-            required
-            value={formData.genre}
-            onChange={handleChange}
-            className={inputClass}
-          ></input>
+            <label htmlFor="genre">Genre (whatever you want):</label>
+            <input
+              type="text"
+              name="genre"
+              required
+              value={formData.genre}
+              onChange={handleChange}
+              className={inputClass}
+            ></input>
 
-          <label htmlFor="date">Date completed:</label>
-          <input
-            type="date"
-            name="date"
-            required
-            value={formData.date}
-            onChange={handleChange}
-            className={inputClass}
-          ></input>
+            <label htmlFor="date">Date completed:</label>
+            <input
+              type="date"
+              name="date"
+              required
+              value={formData.date}
+              onChange={handleChange}
+              className={inputClass}
+            ></input>
 
-          <label htmlFor="rating">Rating (out of 3):</label>
-          <input
-            type="number"
-            name="rating"
-            required
-            value={formData.rating}
-            onChange={handleChange}
-            className={inputClass}
-          ></input>
-        </fieldset>
+            <label htmlFor="rating">Rating (out of 3):</label>
+            <input
+              type="number"
+              name="rating"
+              required
+              value={formData.rating}
+              onChange={handleChange}
+              className={inputClass}
+            ></input>
+          </fieldset>
 
-        <fieldset className={`${fieldsetClass} grow`}>
-          <legend className={legendClass}>Thoughts on the book:</legend>
-          <textarea
-            type="text"
-            name="notes"
-            value={formData.notes}
-            onChange={handleChange}
-            placeholder="notes"
-            className={`${inputClass} h-96 w-full`}
-          ></textarea>
-        </fieldset>
+          <fieldset className={`${fieldsetClass} grow`}>
+            <legend className={legendClass}>Thoughts on the book:</legend>
+            <textarea
+              type="text"
+              name="notes"
+              value={formData.notes}
+              onChange={handleChange}
+              placeholder="notes"
+              className={`${inputClass} h-96 w-full`}
+            ></textarea>
+          </fieldset>
+        </div>
+        {/* Submit button (rather than onClick) used here to leverage my lazy, html-side form validation */}
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          type="submit"
+        >
+          Save Changes
+        </button>
       </form>
-      <Button action={handleSubmit}>Save Changes</Button>
     </div>
   );
 }
