@@ -32,5 +32,5 @@ CREATE TABLE books
 
 1. Clone this repo
 2. In the folder where you cloned the repo to, install the node packages with `npm i`
-3. Link your pg database by adding your pg password to the environment variables: `touch backend/.env && echo "DB_PASSWORD="<your_password>" >> backend/.env`
+3. Link your pg database by adding your pg password to the environment variables: `echo "DB_PASSWORD="<your_password>" > backend/.env`
 4. You should be all set. Go ahead and run the app with `npm run dev`, and navigate to http://localhost:5173 in your browser to try out the app.
