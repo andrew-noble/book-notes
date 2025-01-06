@@ -1,10 +1,18 @@
 # Book Notes CRUD Project
 
 This app allows the user to store book notes and details in their local postgres server. I made it to practice working with a
-full application stack: frontend uses React and tailwind, backend is express.js, and database is PostgreSQL. I also learned
-client-side routing with react-router-dom.
+full application stack. I also learned client-side routing with react-router-dom.
 
 It's a CRUD app for book notes.
+
+## Demonstrated Skills + Libraries
+
+- Postgres queries
+- react frontend
+- express backend
+- react-router-dom
+- tailwind styling
+
 
 ## Features
 
